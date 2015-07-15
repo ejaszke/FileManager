@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% block stylesheets %}
+
+
+
+{% extends '::base.html.twig' %}
+
+{% block content %}
+
+    {% block file_manager_block %}
     {% endblock %}
-    {% block javascripts %}
-    {% endblock %}
-</head>
-<body>
-{% block file_manager_block %}
+
 {% endblock %}
-</body>
-</html>
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

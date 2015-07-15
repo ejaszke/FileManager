@@ -21,8 +21,8 @@
 .modal-dialog .modal-header,
 .modal-dialog .modal-header > button,
 .panel-default > .panel-heading {
-    background: #93B9FF;
-    color: #ffffff;
+    background: #ffffff;
+    /*color: #ffffff;*/
 }
 
 #FileManagerContainer .FileManagerListDirs a,
@@ -51,7 +51,7 @@
 .ToolBar .btn:hover,
 .ToolBar .btn:active,
 .ToolBar .btn:focus {
-    background-color: #86a8e8;
+    background-color: #EFF2F3;
     color: inherit;
     border-color: inherit;
 }
@@ -67,10 +67,14 @@ div.block_row.item_selected:hover,
 }
 
 #FileManagerContainer .FileManagerListItems .item_selected {
-    background-color: #a8c2ff;
+    background-color: #EFF2F3;
 }
 
 #FileManagerContainer .FileManagerListItems .item_selected:hover,
 div.block_row.item_selected:hover {
-    background-color: #99b0e8;
+    background-color: #E5E9EC;
+}
+
+.modal.fade {
+    top: 100%;
 }

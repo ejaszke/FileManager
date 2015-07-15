@@ -100,6 +100,8 @@ class FileManager
      */
     public function __construct(array $parameters, $driver, ContainerInterface $container)
     {
+        $this->container = $container;
+
         $this->setExtensionsAllowed($parameters['mime_allowed']);
         $this->setThemeTemplate($parameters['theme']['template']);
         $this->setUploadPath($parameters['upload_path']);
@@ -110,9 +112,9 @@ class FileManager
         $this->setFilterImages($parameters['filter_images']);
         $this->setFilter(self::FILTER_NAME);
         $this->setWebPath();
-        $this->container = $container;
 
         $this->setDriver($driver);
+
     }
 
     /**
@@ -154,6 +156,11 @@ class FileManager
     public function setUploadPath($root)
     {
         $this->upload_path = $root;
+        $this->upload_path = $root .  $this->container->get('security.context')->getToken()->getUser();
+
+        if (!is_dir($this->upload_path)) {
+            mkdir($this->upload_path, 0777, true);
+        }
     }
 
     /**
@@ -297,10 +304,10 @@ class FileManager
         }
         $upload_path = realpath($this->getUploadPath());
 
-        if (strcasecmp($real_path, $upload_path > 0)) {
+        if (strcasecmp($real_path, $upload_path) >= 0) {
             return true;
         } else {
-            throw new \Exception("Directory is not in the upload path", 403);
+            throw new \Exception("Wystąpił problem.", 403);
         }
     }
 
@@ -332,6 +339,19 @@ class FileManager
      */
     public function resolveRequest(Request $request, $action = null)
     {
+        $request->request->set(
+            'target_file',
+            str_replace(
+                $this->container->get('security.context')->getToken()->getUser(),
+                $this->getUploadPath(),
+                $request->request->get('target_file')
+            )
+        );
+
+        if (!$request->request->get("target_file")) {
+            $request->request->set('target_file', $this->getUploadPath());
+        }
+
         $this->setDirPath($request->get('dir_path'));
 
         $this->setCurrentFile($this->getPath($this->getDirPath(), $request->get('filename'), true));
@@ -620,6 +640,7 @@ class FileManager
      */
     public function newDirectory()
     {
+
         $target_full_path = $this->getTargetFile()->getFilepath(true);
         $this->event(YouweFileManagerEvents::BEFORE_FILE_DIR_CREATED);
         $this->getDriver()->makeDir($target_full_path);

@@ -53,6 +53,7 @@ class FileManagerController extends Controller
      * @Route(
      *      "/upload/{dir_path}",
      *      name="youwe_file_manager_upload",
+     *      defaults={"dir_path":null},
      *      options={"expose":true},
      *      requirements={"dir_path":".+"}
      * )
@@ -141,7 +142,7 @@ class FileManagerController extends Controller
      * @param string  $path the path of the file that is downloaded
      * @return Response
      */
-    public function DownloadAction(Request $request, $path)
+    public function downloadAction(Request $request, $path)
     {
         /** @var FileManagerService $service */
         $service = $this->get('youwe.file_manager.service');
@@ -159,6 +160,42 @@ class FileManagerController extends Controller
 
         $response->headers->set('Content-Type', 'mime/type');
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '"');
+        $response->setContent($content);
+
+        return $response;
+    }
+
+
+    /**
+     * @Route(
+     *      "/showImages/{path}",
+     *      name="youwe_file_manager_show_image",
+     *      requirements={"path"=".+"},
+     *      options={"expose":true}
+     * )
+     *
+     * @param Request $request
+     * @param string  $path the path of the file that is downloaded
+     * @return Response
+     */
+    public function imageShowAction(Request $request, $path)
+    {
+        $path = str_replace("/".$this->getUser()->getUsername(), "", $path);
+        /** @var FileManagerService $service */
+        $service = $this->get('youwe.file_manager.service');
+
+        /** @var FileManagerDriver $driver */
+        $driver = $this->get('youwe.file_manager.driver');
+        $parameters = $this->container->getParameter('youwe_file_manager');
+        $fileManager = $service->createFileManager($parameters, $driver);
+
+        $filepath = $fileManager->getPath($path, null, true);
+        $content = file_get_contents($filepath);
+        $filename = basename($path);
+        $response = new Response();
+
+        $response->headers->set('Content-Type', 'mime/type');
+        $response->headers->set('Content-Disposition', 'inline;filename="' . $filename . '"');
         $response->setContent($content);
 
         return $response;

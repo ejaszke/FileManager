@@ -1,20 +1,48 @@
 {# Upload Modal #}
-<div id="file-manager-upload-dialog" class="modal fade">
+<div id="file-manager-upload-dialog" class="modal fade" >
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Upload</h4>
+                <h3 class="modal-title">Dodaj pliki</h3>
             </div>
+
             <div class="modal-body" id="UploadContent">
                 <div id="UploadLoadingScreen" class="UploadLoadingScreen FileManagerLoadingScreen">
                 </div>
-                {{ form_label(form.file) }}
+                {#{{ form_label(form.file) }}#}
                 {{ form_widget(form.file, {'attr':{'class':'hidden', 'accept':upload_allow|join(',')} } ) }}
-                <div id="dragandrophandler">Drag & Drop files or Click</div>
+                <div id="dragandrophandler">Przeciągnij i upuść pliki tutaj <br>lub kliknij</div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning cancel" data-dismiss="modal">Anuluj</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{# Confirm Modal #}
+<div id="file-manager-confirm-dialog">
+    <div class="confirmation-modal modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h3 class="modal-title">Potwierdzenie operacji</h3>
+                </div>
+
+                <div class="modal-body">
+                    <p>Czy na pewno chcesz usunąć ten plik?</p>
+                    <p>Nie ma możliwości przywrócenia usuniętych plików.</p>
+                </div>
                 <div class="modal-footer">
+                    <button class="confirm confirm_delete btn btn-primary" type="button" data-dismiss="modal">
+                        Tak
+                    </button>
                     <button class="cancel btn btn-default" type="button" data-dismiss="modal">
-                        Cancel
+                        Nie
                     </button>
                 </div>
             </div>
@@ -22,37 +50,40 @@
     </div>
 </div>
 
+
 {# Info Modal #}
 <div id="infoModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content panel-info">
-            <div class="modal-header panel-heading">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Info</h4>
+            <div class="modal-header">
+                <h3 class="modal-title">Informacja</h3>
             </div>
             <div class="modal-body" id="infoContent">
                 <table class="table table-striped">
                     <tr>
-                        <td>Filename</td>
+                        <td>Nazwa pliku</td>
                         <td class="datarow" data-category="filename"></td>
                     </tr>
                     <tr>
-                        <td>Path</td>
+                        <td>Ścieżka</td>
                         <td class="datarow" data-category="web_path"></td>
                     </tr>
                     <tr>
-                        <td>Mimetype</td>
+                        <td>Typ</td>
                         <td class="datarow" data-category="mimetype"></td>
                     </tr>
                     <tr>
-                        <td>Modified</td>
+                        <td>Modyfikowany</td>
                         <td class="datarow" data-category="modified"></td>
                     </tr>
                     <tr>
-                        <td>File Size</td>
+                        <td>Rozmiar</td>
                         <td class="datarow" data-category="file_size"></td>
                     </tr>
                 </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning cancel" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
@@ -62,11 +93,13 @@
 <div id="errorModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content panel-danger">
-            <div class="modal-header panel-heading">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Error!</h4>
+            <div class="modal-header">
+                <h3 class="modal-title">Błąd</h3>
             </div>
             <div class="modal-body" id="errorContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning cancel" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
@@ -77,38 +110,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Preview</h4>
+                <h3 class="modal-title">Podgląd</h3>
             </div>
             <div class="modal-body" id="previewContent">
             </div>
-        </div>
-    </div>
-</div>
-
-{# Confirm Modal #}
-<div id="file-manager-confirm-dialog">
-    <div class="confirmation-modal modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class=modal-header>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Confirmation required</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this?</p>
-
-                    <p>This cannot be undone!</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="confirm confirm_delete btn btn-primary" type="button" data-dismiss="modal">
-                        Yes
-                    </button>
-                    <button class="cancel btn btn-default" type="button" data-dismiss="modal">
-                        No
-                    </button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning cancel" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
 </div>
+

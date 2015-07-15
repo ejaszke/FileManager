@@ -1,56 +1,63 @@
 <div class="btn-group">
-    <button id="new_folder_btn" type="button" class="btn btn-default" title="New Folder">
-        <span class="fa fa-plus-circle"></span>
-    </button>
-    <button id="upload_file_btn" type="button" class="btn btn-default" title="Upload">
-        <span class="fa fa-upload"></span>
-    </button>
-    <button id="download_btn" type="button" class="btn btn-default" title="Download">
-        <span class="fa fa-download"></span>
+    <button id="folder_up_btn" type="button" class="btn btn-white" title="Powrót">
+        <span class="fa fa-arrow-up"></span>&nbsp;Powrót
     </button>
 </div>
+
 <div class="btn-group">
-    <button id="select_btn" type="button" class="btn btn-default" title="Select">
-        <span class="fa fa-hand-o-up"></span>
+    <button id="new_folder_btn" type="button" class="btn btn-white" title="New Folder">
+        <span class="fa fa-plus-circle"></span> &nbsp;Utwórz folder
     </button>
-    <button id="rename_btn" type="button" title="Rename" class="btn btn-default">
-        <span class="fa fa-pencil"></span>
+    <button id="upload_file_btn" type="button" class="btn btn-white" title="Załaduj">
+        <span class="fa fa-upload"></span>&nbsp;Dodaj
     </button>
-    <button id="copy_btn" type="button" class="btn btn-default" title="{% spaceless %}
-                {% if copy_file and copy_file['type'] == copy_type %}
-                    Copy file. Copied file: /uploads/{{ copy_file['display_dir'] }}/{{ copy_file['source_file'] }}
-                {% else %}
-                    Copy file
-                {% endif %}
-            {% endspaceless %}">
-        <span class="fa fa-copy"></span>
+    <button id="download_btn" type="button" class="btn btn-white" title="Pobierz">
+        <span class="fa fa-download"></span>&nbsp;Pobierz
     </button>
-    <button id="cut_btn" type="button" class="btn btn-default" title="{% spaceless %}
-                {% if copy_file and copy_file['type'] == cut_type %}
-                   Cut file. Copied file: /uploads/{{ copy_file['display_dir'] }}/{{ copy_file['source_file'] }}
-                {% else %}
-                    Cut file
-                {% endif %}
-            {% endspaceless %}">
-        <span class="fa fa-cut"></span>
+
+</div>
+<div class="btn-group">
+    {#<button id="select_btn" type="button" class="btn btn-default" title="Select">#}
+        {#<span class="fa fa-hand-o-up"></span>#}
+    {#</button>#}
+    <button id="rename_btn" type="button" title="Zmień nazwę" class="btn btn-white">
+        <span class="fa fa-pencil">&nbsp;Zmień nazwę</span>
     </button>
-    <button id="paste_btn" type="button"
-            class="btn btn-default {% if not copy_file %}disabled{% else %}hasFile{% endif %}" title="{% spaceless %}
-                {% if copy_file %}
-                    Paste file. Copied file: /uploads/{{ copy_file['display_dir'] }}/{{ copy_file['source_file'] }}
-                {% else %}
-                    Paste file
-                {% endif %}
-            {% endspaceless %}">
-        <span class="fa fa-paste"></span>
+    {#<button id="copy_btn" type="button" class="btn btn-default" title="{% spaceless %}#}
+                {#{% if copy_file and copy_file['type'] == copy_type %}#}
+                    {#Copy file. Copied file: /uploads/{{ copy_file['display_dir'] }}/{{ copy_file['source_file'] }}#}
+                {#{% else %}#}
+                    {#Copy file#}
+                {#{% endif %}#}
+            {#{% endspaceless %}">#}
+        {#<span class="fa fa-copy"></span>#}
+    {#</button>#}
+    {#<button id="cut_btn" type="button" class="btn btn-default" title="{% spaceless %}#}
+                {#{% if copy_file and copy_file['type'] == cut_type %}#}
+                   {#Cut file. Copied file: /uploads/{{ copy_file['display_dir'] }}/{{ copy_file['source_file'] }}#}
+                {#{% else %}#}
+                    {#Cut file#}
+                {#{% endif %}#}
+            {#{% endspaceless %}">#}
+        {#<span class="fa fa-cut"></span>#}
+    {#</button>#}
+    {#<button id="paste_btn" type="button"#}
+            {#class="btn btn-default {% if not copy_file %}disabled{% else %}hasFile{% endif %}" title="{% spaceless %}#}
+                {#{% if copy_file %}#}
+                    {#Paste file. Copied file: /uploads/{{ copy_file['display_dir'] }}/{{ copy_file['source_file'] }}#}
+                {#{% else %}#}
+                    {#Paste file#}
+                {#{% endif %}#}
+            {#{% endspaceless %}">#}
+        {#<span class="fa fa-paste"></span>#}
+    {#</button>#}
+    <button id="preview_btn" type="button" title="Podgląd" class="btn btn-white">
+        <span class="fa fa-image"></span>&nbsp;Podgląd
     </button>
-    <button id="preview_btn" type="button" title="Display the image" class="btn btn-default">
-        <span class="fa fa-image"></span>
+    <button id="info_btn" type="button" title="Informacje" class="btn btn-white">
+        <span class="fa fa-info"></span>&nbsp;Informacje
     </button>
-    <button id="info_btn" type="button" title="Show the file information" class="btn btn-default">
-        <span class="fa fa-info"></span>
-    </button>
-    <button id="delete_btn" type="button" title="Delete" class="btn btn-default">
-        <span class="fa fa-trash-o"></span>
+    <button id="delete_btn" type="button" title="Usuń" class="btn btn-white">
+        <span class="fa fa-trash-o"></span>&nbsp;Usuń
     </button>
 </div>

@@ -299,11 +299,11 @@ class FileManagerService
     public function handleAction(FileManager $fileManager, Request $request, $action)
     {
         $response = new Response();
-        try{
+        try {
             $dir = $this->getFilePath($fileManager);
             $fileManager->setDir($dir);
             $fileManager->checkPath();
-            if($request->getMethod() === 'POST') {
+            if ($request->getMethod() === 'POST') {
                 $this->checkToken($request->get('token'));
             }
             switch($action){

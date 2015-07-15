@@ -935,7 +935,7 @@ var // currently active contextMenu trigger
             
             // create contextMenu items
             $.each(opt.items, function(key, item){
-                var $t = $('<li class="context-menu-item"></li>').addClass(item.className || ""),
+                var $t = $('<li class="context-menu-item"></li>').addClass(item.className || "").html(item._name || item.name || ""),
                     $label = null,
                     $input = null;
                 
@@ -1059,7 +1059,12 @@ var // currently active contextMenu trigger
                                 }
                             });
                             // FIXME: shouldn't this .html() be a .text()?
-                            $('<span></span>').html(item._name || item.name || "").appendTo($t);
+                            //$('<span></span>').html(item._name || item.name || "").appendTo($t);
+                            if (item.icon) {
+                                $('<span></span>').appendTo($t).addClass("icon icon-" + item.icon);
+                            } else {
+                                $('<span></span>').html(item._name || item.name || "").appendTo($t);
+                            }
                             break;
                     }
                     
@@ -1074,10 +1079,10 @@ var // currently active contextMenu trigger
                         }
                     }
                 
-                    // add icons
-                    if (item.icon) {
-                        $t.addClass("icon icon-" + item.icon);
-                    }
+                    //// add icons
+                    //if (item.icon) {
+                    //    $t.addClass("icon icon-" + item.icon);
+                    //}
                 }
                 
                 // cache contained elements

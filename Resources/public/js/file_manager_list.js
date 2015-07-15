@@ -8,6 +8,7 @@ var FileManager = function () {
         history_index = [],
         current_index = 0,
         isPopup,
+        parentPath,
         error_modal,
         preview_modal,
         info_modal,
@@ -114,7 +115,8 @@ var FileManager = function () {
                 folder: "#new_folder_btn",
                 info: "#info_btn",
                 blockView: "#set_display_block",
-                listView: "#set_display_list"
+                listView: "#set_display_list",
+                folderUp: "#folder_up_btn"
             }
         },
         contextMenu = {
@@ -143,18 +145,18 @@ var FileManager = function () {
                 "code"
             ],
             items: {
-                rename: {name: "Rename", icon: "rename"},
-                info: {name: "File Information", icon: "fileinfo"},
-                delete: {name: "Delete", icon: "delete"},
+                rename: {name: "Zmień nazwę", icon: "rename"},
+                info: {name: "Informacje", icon: "fileinfo"},
+                delete: {name: "Usuń", icon: "delete"},
                 sep1: "---------"
             },
             subItems: {
-                preview_img: {name: "Preview", icon: "preview"},
-                preview_vid: {name: "Preview", icon: "preview"},
-                download: {name: "Download", icon: "download"},
-                rename: {name: "New Directory", icon: "rename"},
-                extract: {name: "Extract", icon: "extract"},
-                new_dir: {name: "New Directory", icon: "newdir"}
+                preview_img: {name: "Podgląd", icon: "preview"},
+                preview_vid: {name: "Podgląd", icon: "preview"},
+                download: {name: "Pobierz", icon: "download"},
+                rename: {name: "Zmień nazwę", icon: "rename"},
+                extract: {name: "Rozpakuj", icon: "extract"},
+                new_dir: {name: "Nowy folder", icon: "newdir"}
             }
         },
         routes = {
@@ -542,8 +544,7 @@ var FileManager = function () {
                     "path": dir_path,
                     "url": dir_route
                 };
-            history_index.splice(current_index, (history_index.length - current_index
-            ));
+            history_index.splice(current_index, (history_index.length - current_index));
             history_index.push(history_data);
             activePath = dir_path;
 
@@ -599,7 +600,7 @@ var FileManager = function () {
                 path = "/" + root_dir + "/";
             }
 
-            $(selectors.containers.previewContent).html("<img src='" + path + file_name + "'/>");
+            $(selectors.containers.previewContent).html("<img src='/filemanager/showImages/" + path + file_name + "'/>");
             preview_modal.modal({show: true});
         },
 
@@ -639,15 +640,15 @@ var FileManager = function () {
          * Navigate back or forward through the history
          */
         navigateHistory = function () {
-            loadingScreen();
-
-            var history_obj = history_index[current_index];
-            activePath = history_obj.path;
-            setTimeout(function () {
-                self.reloadFileList();
-                var parent_li = $("span[id='" + history_obj.path + "']").closest("li");
-                addActiveClass(parent_li);
-            }, 200);
+            //loadingScreen();
+            //
+            //var history_obj = history_index[current_index];
+            //activePath = history_obj.path;
+            //setTimeout(function () {
+            //    self.reloadFileList();
+            //    var parent_li = $("span[id='" + history_obj.path + "']").closest("li");
+            //    addActiveClass(parent_li);
+            //}, 200);
         },
 
         /**
@@ -676,7 +677,7 @@ var FileManager = function () {
                 deleteConfirm(file_name);
             } else if (key === contextMenu.keys.previewImage) {
                 file_name = item_element.find("span").html();
-                $(selectors.containers.previewContent).html("<img src='" + path + file_name + "'/>");
+                $(selectors.containers.previewContent).html("<img src='/filemanager/showImages/" + path + file_name + "'/>");
                 preview_modal.modal({show: true});
             } else if (key === contextMenu.keys.previewVideo) {
                 file_name = item_element.find("span").html();
@@ -883,6 +884,9 @@ var FileManager = function () {
         },
 
         disableToolbarItems = function () {
+            if (activePath === null) {
+                $(selectors.buttons.folderUp).attr("disabled", "disabled");
+            }
             $(selectors.buttons.download).attr("disabled", "disabled");
             $(selectors.buttons.select).attr("disabled", "disabled");
             $(selectors.buttons.rename).attr("disabled", "disabled");
@@ -924,6 +928,8 @@ var FileManager = function () {
                 $(selectors.buttons.preview).attr("disabled", "disabled");
             }
         },
+
+
 
         /**
          * Because the list is refreshed by ajax, we cannot set some functions on the DOM elements.
@@ -1021,6 +1027,30 @@ var FileManager = function () {
             }).on("click", selectors.buttons.blockView, function () {
                 var new_dir_route = Routing.generate(routes.list, {"dir_path": activePath});
                 ajaxRequest(new_dir_route, {'display_type': selectors.layout.block}, "GET", false);
+            });
+
+            /**
+             * Return to parent Folder
+             */
+            $(document).on("click", selectors.buttons.folderUp, function () {
+
+                var newPath = null;
+                if(activePath.lastIndexOf('/') > 0) {
+                    newPath = activePath.slice(0,activePath.lastIndexOf('/'));
+                } else {
+                    $(this).attr("disabled", "disabled");
+
+                }
+                var parent_li = $("span[id='" + newPath + "']").parent("span").parent("li"),
+                    sub_ul = parent_li.children();
+
+                sub_ul.slideDown();
+
+                parent_li.find("span." + selectors.classes.toggleDir + " i:first").removeClass(selectors.classes.arrows.right);
+                parent_li.find("span." + selectors.classes.toggleDir + " i:first").addClass(selectors.classes.arrows.down);
+
+                navigateTo(parent_li, newPath);
+
             });
 
             /**
