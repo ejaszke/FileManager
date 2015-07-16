@@ -175,7 +175,7 @@ var FileManager = function () {
         },
         messages = {
             errors: {
-                fileUpload: "File with this extension is not allowed"
+                fileUpload: "Niedozwolony format lub wielkość pliku!"
             }
         },
 
