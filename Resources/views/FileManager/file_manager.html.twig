@@ -20,10 +20,8 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     {% javascripts
-    '@YouweFileManagerBundle/Resources/public/js/jquery.js'
-    '@YouweFileManagerBundle/Resources/public/js/jquery-ui.custom.min.js'
-    '@YouweFileManagerBundle/Resources/public/js/bootstrap.min.js'
     '@YouweFileManagerBundle/Resources/public/js/dropzone.js'
     '@YouweFileManagerBundle/Resources/public/js/jquery.contextMenu.js'
     '@YouweFileManagerBundle/Resources/public/js/file_manager_list.js'

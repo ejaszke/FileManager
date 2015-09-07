@@ -249,7 +249,7 @@ html, body {
 }
 
 #file-manager-table-wrapper {
-    padding: 0 20px;
+    padding: 10px 0 0 0;
 }
 
 #file-manager-table-wrapper.file_body_block {
